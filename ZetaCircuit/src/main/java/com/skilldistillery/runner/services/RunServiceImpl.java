@@ -20,7 +20,7 @@ public class RunServiceImpl implements RunService {
 	@Override
 	public List<Run> allRuns() {
 		// TODO Auto-generated method stub
-		return null;
+		return runRepo.findAll();
 	}
 
 	@Override
