@@ -1,6 +1,5 @@
 package com.skilldistillery.runner.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -52,7 +51,7 @@ class RunTest {
 	void test1() {
 		assertNotNull(run);
 		
-		assertTrue(run.getRace());
+		assertTrue(run.getRaceTitle().equals("Boston Marathon"));
 		
 	}
 	

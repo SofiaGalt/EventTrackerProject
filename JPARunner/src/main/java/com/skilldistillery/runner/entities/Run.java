@@ -1,5 +1,6 @@
 package com.skilldistillery.runner.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,13 @@ public class Run {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	
-	Boolean race;
+	@Column(name="race_title")
+	private String raceTitle;
+	
+	private String location;
+	
+//	@Column(name="race_title")
+//	private Integer durationSeconds;
 	
 	public Run() {}
 
@@ -22,13 +29,22 @@ public class Run {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 
-	public Boolean getRace() {
-		return race;
+	public String getRaceTitle() {
+		return raceTitle;
 	}
 
-	public void setRace(Boolean race) {
-		this.race = race;
+	public void setRaceTitle(String raceTitle) {
+		this.raceTitle = raceTitle;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	@Override
