@@ -24,6 +24,6 @@ public class RunController {
 	
 	@GetMapping("runs")
 	public List<Run> allRuns() {
-		return runService.allRuns();
+		return runService.findAll();
 	}
 }

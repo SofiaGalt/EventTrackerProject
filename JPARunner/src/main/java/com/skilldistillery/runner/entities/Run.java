@@ -5,9 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Run {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
@@ -17,11 +20,23 @@ public class Run {
 	
 	private String location;
 	
-//	@Column(name="race_title")
-//	private Integer durationSeconds;
+	private Integer hours;
+	private Integer minutes;
+	private Integer seconds;
+	
+	private Double distance;
+	
+	@Column(name="distance_unit")
+	private String distanceUnit;
+	
+	private String notes;
+	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	public Run() {}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -29,7 +44,6 @@ public class Run {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
 
 	public String getRaceTitle() {
 		return raceTitle;
@@ -45,6 +59,66 @@ public class Run {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public Integer getHours() {
+		return hours;
+	}
+
+	public void setHours(Integer hours) {
+		this.hours = hours;
+	}
+	
+	public Integer getMinutes() {
+		return minutes;
+	}
+
+	public void setMinutes(Integer minutes) {
+		this.minutes = minutes;
+	}
+
+	public Integer getSeconds() {
+		return seconds;
+	}
+
+	public void setSeconds(Integer seconds) {
+		this.seconds = seconds;
+	}
+
+	public Double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(Double distance) {
+		this.distance = distance;
+	}
+
+	public String getDistanceUnit() {
+		return distanceUnit;
+	}
+
+	public void setDistanceUnit(String distanceUnit) {
+		this.distanceUnit = distanceUnit;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Integer getPace() {
+		return null;
 	}
 
 	@Override

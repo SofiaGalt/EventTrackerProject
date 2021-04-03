@@ -1,8 +1,6 @@
 package com.skilldistillery.runner.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,12 +13,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class RunTest {
+class UserTest {
 
 	private static EntityManagerFactory emf;
 	private EntityManager em;
 	
-	private Run run;
+	private User user;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -38,31 +36,30 @@ class RunTest {
 	void setUp() throws Exception {
 		
 		em = emf.createEntityManager();
-		run = em.find(Run.class, 1);
+		user = em.find(User.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		run = null;
+		user = null;
 	} 
 
 	@Test
-	@DisplayName("Testing Run mappings")
+	@DisplayName("Testing user mapping")
 	void test1() {
-		assertNotNull(run);
+		assertNotNull(user);
 		
-		assertTrue(run.getRaceTitle().equals("Boston Marathon"));
-		assertEquals("Boston Massachusetts", run.getLocation());
-		assertEquals(42, run.getSeconds());
+		assertEquals("ShalineRuns", user.getUsername());
+		assertEquals("run4Java", user.getPassword());
 	}
 	
 	@Test
-	@DisplayName("Testing User to Run mapping")
-	void test() {
-		assertNotNull(run);
+	@DisplayName("Testing Run to User mappings")
+	void test2() {
+		assertNotNull(user);
 		
-		assertEquals("negativeSplits", run.getUser().getUsername());
+		assertTrue(user.getRuns().size() > 0);
 	}
-	
+
 }

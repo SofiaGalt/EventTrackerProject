@@ -16,15 +16,39 @@ public class RunServiceImpl implements RunService {
 	
 	@Autowired
 	private RunRepository runRepo;
-	
+
 	@Override
-	public List<Run> allRuns() {
+	public List<Run> findAll() {
 		// TODO Auto-generated method stub
-		return runRepo.findAll();
+		return null;
 	}
 
 	@Override
-	public Run retrieveRun(int runId) {
+	public Run create(Run run) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Run retrieve(int runId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Run> retrieveAllRunsForUser(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Run update(Run run) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Run delete(Run run) {
 		// TODO Auto-generated method stub
 		return null;
 	}
