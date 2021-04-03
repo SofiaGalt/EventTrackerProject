@@ -61,5 +61,4 @@ class UserTest {
 		
 		assertTrue(user.getRuns().size() > 0);
 	}
-
 }
