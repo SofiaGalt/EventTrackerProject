@@ -2,12 +2,16 @@ package com.skilldistillery.runner.entities;
 
 import java.util.List;
 
+import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class User {
@@ -24,8 +28,9 @@ public class User {
 	@Column(name="last_name")
 	private String lastName;
 	
-	private Boolean enabled;
+	private Boolean enabled = true;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private List<Run> runs;
 
@@ -44,7 +49,8 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
+	
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -69,6 +75,7 @@ public class User {
 		this.lastName = lastName;
 	}
 
+	@JsonIgnore
 	public Boolean getEnabled() {
 		return enabled;
 	}

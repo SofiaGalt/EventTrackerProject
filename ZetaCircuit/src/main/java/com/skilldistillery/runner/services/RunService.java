@@ -9,8 +9,7 @@ public interface RunService {
 	List<Run> findAll();  
 	Run create(Run run);
 	Run retrieve(int runId);
-	List<Run> retrieveAllRunsForUser(int userId);
-	Run update(Run run);
-	Run delete(Run run);
-	
+//	List<Run> retrieveAllRunsForUser(int userId);
+	Run update(int id, Run run);
+	Run delete(int id);
 }

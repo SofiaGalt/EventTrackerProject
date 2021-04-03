@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Run {
 	
@@ -34,6 +36,8 @@ public class Run {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
+	
+	private Boolean enabled = true;
 	
 	public Run() {}
 	
@@ -119,6 +123,20 @@ public class Run {
 
 	public Integer getPace() {
 		return null;
+	}
+
+	@JsonIgnore
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+	@JsonIgnore
+	public String getPostedBy() {
+		return getUser().getUsername();
 	}
 
 	@Override
