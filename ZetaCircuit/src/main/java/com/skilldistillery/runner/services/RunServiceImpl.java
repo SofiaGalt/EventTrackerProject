@@ -66,7 +66,6 @@ public class RunServiceImpl implements RunService {
 	@Override
 	public Run delete(int id) {
 		
-		System.out.println("inside RunServiceImpl delete ******************************************************************");
 		Run toDelete = retrieve(id);
 		
 		if(toDelete == null) return null;

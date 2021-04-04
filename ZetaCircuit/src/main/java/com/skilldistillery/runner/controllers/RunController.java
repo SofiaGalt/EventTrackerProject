@@ -2,6 +2,7 @@ package com.skilldistillery.runner.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +46,18 @@ public class RunController {
 	}
 	
 	@PostMapping("runs")
-	public Run create(@RequestBody Run run) {
+	public Run create(@RequestBody Run run, HttpServletResponse resp, HttpServletRequest req) {
 		
-		return runService.create(run);
+		run = runService.create(run);
+		if(run != null) {
+			resp.setStatus(201);
+			StringBuffer url = req.getRequestURL();
+			url.append("/").append(run.getId());
+			resp.setHeader("Location", url.toString());
+		}
+		else { resp.setStatus(404); }
+		
+		return run;
 	}
 	
 	@DeleteMapping("runs/{id}")
