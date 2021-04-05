@@ -2,7 +2,7 @@
 
 For my EventTrackerProject I decided to create something centered around running!  I love running and it's been an awesome part of my family's life. ZetaCircuit, named after my super fast sister, is a personal use app for tracking runs.  A user can keep track of race entries, times, locations, distances, and their notes from each run via RESTFully invoked CRUD operations.  
 
-Link:  http://3.141.108.154:8080/ZetaCircuit/   (Not yet deployed)
+Link:  http://3.141.108.154:8080/ZetaCircuit/   
 
 ## Overview
 The objective of this project was to create a RESTful application.  Below I included the current RESTful path mappings that have been defined, as well as any notes I had about them.
@@ -61,7 +61,7 @@ This is a Gradle application which includes a JPA project and complimentary Spri
 
 This project uses interfaces that extend JpaRepository<E, K>, which made the interactions with the database ridiculously simple and unbelievably quick to implement.
 
-This application will be deployed to an AWS EC2 instance.
+This application is deployed to an AWS EC2 instance.
 
 ## What I learned this week
 
