@@ -41,8 +41,16 @@ public class RunController {
 	}
 	
 	@PutMapping("runs/{id}")
-	public Run update(@PathVariable Integer id, @RequestBody Run run) {
-		return runService.update(id, run);
+	public Run update(@PathVariable Integer id, @RequestBody Run run, HttpServletResponse resp, HttpServletRequest req) {
+		run = runService.update(id, run);
+		if(run != null) {
+			resp.setStatus(201);
+			StringBuffer url = req.getRequestURL();
+			url.append("/").append(run.getId());
+			resp.setHeader("Location", url.toString());
+		}
+		else { resp.setStatus(404); }
+		return run;
 	}
 	
 	@PostMapping("runs")

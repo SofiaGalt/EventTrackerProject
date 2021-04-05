@@ -29,7 +29,7 @@ public class Run {
 	private Double distance;
 	
 	@Column(name="distance_unit")
-	private String distanceUnit;
+	private String distanceUnit = "miles";
 	
 	private String notes;
 	
