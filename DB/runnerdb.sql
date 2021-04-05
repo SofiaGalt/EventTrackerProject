@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `run` (
 ENGINE = InnoDB;
 
 SET SQL_MODE = '';
-DROP USER IF EXISTS runuser@localhost;
+-- DROP USER IF EXISTS runuser@localhost;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 CREATE USER 'runuser'@'localhost' IDENTIFIED BY 'runuser';
 
@@ -86,4 +86,3 @@ INSERT INTO `run` (`id`, `race_title`, `location`, `total_time_seconds`, `distan
 INSERT INTO `run` (`id`, `race_title`, `location`, `total_time_seconds`, `distance`, `distance_unit`, `notes`, `user_id`) VALUES (3, 'New York Marathon', 'NY', 2056.04, 26.2, 'miles', 'My first marathon ever!  It was the best thing ever, even though it was the most painful thing ever!', 1);
 
 COMMIT;
-
