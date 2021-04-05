@@ -1,8 +1,6 @@
 # EventTrackerProject
 
-For my EventTrackerProject I decided to create something centered around running!  I love running and it's been an awesome part of my family's life. ZetaCircuit, named after my super fast sister, is a personal use app for tracking runs.  A user can keep track of race entries, times, locations, distances, and their notes from each run via RESTFully invoked CRUD operations.  
-
-Link:  http://3.141.108.154:8080/ZetaCircuit/   
+For my EventTrackerProject I decided to create something centered around running!  I love running and it's been an awesome part of my family's life. ZetaCircuit, named after my super fast sister, is a personal use app for tracking runs.  A user can keep track of race entries, times, locations, distances, and their notes from each run via RESTFully invoked CRUD operations.    
 
 ## Overview
 The objective of this project was to create a RESTful application.  Below I included the current RESTful path mappings that have been defined, as well as any notes I had about them.
@@ -17,6 +15,7 @@ The objective of this project was to create a RESTful application.  Below I incl
 | 4 | PUT         | api/runs/{id}	| updated fields for the run as Json | Updates an existing run by id |
 |	5 |DELETE      | api/runs/{id}	| | Deletes an existing run by id |
 
+protocol & domain:  http://3.141.108.154:8080/ZetaCircuit/ 
 
 ### #3 Create
 #### sample json for #3 create's request body:
