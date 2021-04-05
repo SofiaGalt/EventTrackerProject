@@ -59,7 +59,7 @@ It follows the separation of concerns design pattern.
 Database to entity mappings were tested with JUnit Jupiter.
 This is a Gradle application which includes a JPA project and complimentary Spring Boot project.
 
-This project uses interfaces that extend JpaRepository<E, K>, which made the interactions with the database ridiculously simple and unbelievably quick to implement.
+This project uses interfaces that extend JpaRepository<E, K>, which made the interactions with the database very simple and quick to implement.
 
 This application is deployed to an AWS EC2 instance.
 
