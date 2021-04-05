@@ -14,7 +14,7 @@ The objective of this project was to create a RESTful application.  Below I incl
 | 1 |GET         | api/runs	   |              | Gets all runs|
 | 2 |GET         | api/runs/{id} |   | 	Get one run by id |
 |	3 |POST        | api/runs |	new run's json | Creates a new run |
-| 4 | PUT         | api/runs/{id}	| updated fields for the run as Json | Update an existing run by id |
+| 4 | PUT         | api/runs/{id}	| updated fields for the run as Json | Updates an existing run by id |
 |	5 |DELETE      | api/runs/{id}	| | Deletes an existing run by id |
 
 
