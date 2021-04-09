@@ -26,7 +26,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` VARCHAR(100) NOT NULL,
   `first_name` VARCHAR(100) NULL,
   `last_name` VARCHAR(100) NULL,
-  PRIMARY KEY (`id`))
+  `enabled` TINYINT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB;
 
 
@@ -38,12 +40,15 @@ DROP TABLE IF EXISTS `run` ;
 CREATE TABLE IF NOT EXISTS `run` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `race_title` VARCHAR(200) NULL,
+  `hours` INT UNSIGNED NULL,
+  `minutes` INT UNSIGNED NULL,
+  `seconds` INT UNSIGNED NULL,
   `location` VARCHAR(1000) NULL,
-  `total_time_seconds` DECIMAL NULL,
-  `distance` INT NULL,
+  `distance` DECIMAL(32) UNSIGNED NULL,
   `distance_unit` VARCHAR(100) NULL,
   `notes` VARCHAR(10000) NULL,
   `user_id` INT NOT NULL,
+  `enabled` TINYINT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_run_User_idx` (`user_id` ASC),
   CONSTRAINT `fk_run_User`
@@ -56,7 +61,7 @@ ENGINE = InnoDB;
 SET SQL_MODE = '';
 -- DROP USER IF EXISTS runuser@localhost;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-CREATE USER 'runuser'@'localhost' IDENTIFIED BY 'runuser';
+-- CREATE USER 'runuser'@'localhost' IDENTIFIED BY 'runuser';
 
 GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'runuser'@'localhost';
 
@@ -69,9 +74,9 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `runnerdb`;
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`) VALUES (1, 'ShalineRuns', 'run4Java', NULL, NULL);
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`) VALUES (2, 'JoeParker', 'lessCardio7', 'Joe', 'Parker');
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`) VALUES (3, 'negativeSplits', 'v02max', 'Amanda', 'Choo');
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `enabled`) VALUES (1, 'ShalineRuns', 'run4Java', NULL, NULL, 1);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `enabled`) VALUES (2, 'JoeParker', 'lessCardio7', 'Joe', 'Parker', 1);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `enabled`) VALUES (3, 'negativeSplits', 'v02max', 'Amanda', 'Choo', 1);
 
 COMMIT;
 
@@ -81,8 +86,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `runnerdb`;
-INSERT INTO `run` (`id`, `race_title`, `location`, `total_time_seconds`, `distance`, `distance_unit`, `notes`, `user_id`) VALUES (1, 'Boston Marathon', 'Boston Massachusetts', 9637.31, 26.2, 'miles', 'Boston is always my favorite race of the year.  Love my hometown.', 3);
-INSERT INTO `run` (`id`, `race_title`, `location`, `total_time_seconds`, `distance`, `distance_unit`, `notes`, `user_id`) VALUES (2, NULL, 'Neighborhood ', NULL, 5, 'miles', 'Shake out run after work', 2);
-INSERT INTO `run` (`id`, `race_title`, `location`, `total_time_seconds`, `distance`, `distance_unit`, `notes`, `user_id`) VALUES (3, 'New York Marathon', 'NY', 2056.04, 26.2, 'miles', 'My first marathon ever!  It was the best thing ever, even though it was the most painful thing ever!', 1);
+INSERT INTO `run` (`id`, `race_title`, `hours`, `minutes`, `seconds`, `location`, `distance`, `distance_unit`, `notes`, `user_id`, `enabled`) VALUES (1, 'Boston Marathon', 2, 41, 42, 'Boston Massachusetts', 26.2, 'miles', 'Boston is always my favorite race of the year.  Love my hometown.', 3, 1);
+INSERT INTO `run` (`id`, `race_title`, `hours`, `minutes`, `seconds`, `location`, `distance`, `distance_unit`, `notes`, `user_id`, `enabled`) VALUES (2, NULL, 1, 2, 53, 'Neighborhood ', 5, 'miles', 'Shake out run after work', 2, 1);
+INSERT INTO `run` (`id`, `race_title`, `hours`, `minutes`, `seconds`, `location`, `distance`, `distance_unit`, `notes`, `user_id`, `enabled`) VALUES (3, 'New York Marathon', 6, 47, 17, 'NY', 26.2, 'miles', 'My first marathon ever!  It was the best thing ever, even though it was the most painful thing ever!', 1, 1);
+INSERT INTO `run` (`id`, `race_title`, `hours`, `minutes`, `seconds`, `location`, `distance`, `distance_unit`, `notes`, `user_id`, `enabled`) VALUES (4, NULL, 1, 5, 22, 'Metro Area', 3, 'miles', NULL, 3, 1);
 
 COMMIT;
