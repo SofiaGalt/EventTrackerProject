@@ -84,4 +84,60 @@ public class RunController {
 		
 		
 	}
+	
+	@GetMapping("users/{userId}/runs")
+	public List<Run> listRunsForUser(
+			@PathVariable Integer userId,
+			HttpServletResponse resp
+	) {
+		List<Run> runs = runService.findAllForUser(userId);
+		if (runs == null) {
+			resp.setStatus(404);
+		}
+		return runs;
+	}
+	
+	@GetMapping("users/{userId}/runs/{runId}")
+	public Run retrieveRunGivenIdAndUser(
+			@PathVariable Integer userId,
+			@PathVariable Integer runId,
+			HttpServletResponse resp
+	) {
+		Run run = runService.findByIdAndUser(runId, userId);
+		if (run == null) {
+			resp.setStatus(404);
+		}
+		return run;
+	}
+	
+	@PostMapping("users/{userId}/runs")
+	public Run addRunForUser(
+			@PathVariable Integer userId,
+			@RequestBody Run run,
+			HttpServletRequest req,
+			HttpServletResponse resp
+	) {
+		run = runService.create(userId, run);
+		if (run != null) {
+			resp.setStatus(201);
+			StringBuffer url = req.getRequestURL();
+			url.append("/").append(run.getId());
+			resp.setHeader("Location", url.toString());
+		}
+		else {
+			resp.setStatus(404);
+		}
+		return run;
+	}
+	
+	@DeleteMapping("users/{userId}/runs/{runId}")
+	public void deleteCommentFromPost(@PathVariable Integer userId, @PathVariable Integer runId, HttpServletResponse resp) {
+		
+		if (runService.delete(userId, runId) != null) {
+			resp.setStatus(204);
+		}
+		else {
+			resp.setStatus(404);
+		}
+	}
 }

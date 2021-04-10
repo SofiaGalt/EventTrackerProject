@@ -37,7 +37,7 @@ function displayErrors(msg){
 function displayRuns(runs){
 
     console.log('display runs');
-
+    prepareRunEntriesTable();
     for (const run of runs) {
         displayRun(run);
     }
@@ -78,4 +78,9 @@ function displayRun(run){
     }
     divListItem.innerHTML = divListItem.innerHTML + `<br>Posted By ${run.user.username}`;
     div.appendChild(divListItem);
+}
+
+function prepareRunEntriesTable(){
+    let div = document.querySelector('#runEntriesTable');
+    div.innerHTML = '<h3>Run Entries</h3>';
 }

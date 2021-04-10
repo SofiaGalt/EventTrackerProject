@@ -37,6 +37,17 @@ public class RunServiceImpl implements RunService {
 		
 		return runRepo.saveAndFlush(run);
 	}
+	
+	@Override
+	public Run create(int userId, Run run) {
+		
+		User user = em.find(User.class, userId);
+		if(user == null) return null;
+		if((run.getUser() != null) && (!run.getUser().equals(user))) return null;
+		
+		run.setUser(user);
+		return runRepo.saveAndFlush(run);
+	}
 
 	@Override
 	public Run retrieve(int runId) {
@@ -74,6 +85,31 @@ public class RunServiceImpl implements RunService {
 		
 		runRepo.saveAndFlush(toDelete);
 		return toDelete;
+	}
+	
+	@Override
+	public Run delete(int userId, int runId) {
+		
+		Run toDelete = retrieve(runId);
+		
+		if(toDelete == null || (toDelete.getUser().getId() != userId )) return null;
+		
+		toDelete.setEnabled(false);
+		
+		runRepo.saveAndFlush(toDelete);
+		return toDelete;
+	}
+	
+	@Override
+	public List<Run> findAllForUser(int userId) {
+		
+		return runRepo.findByUser_Id(userId);
+	}
+
+	@Override
+	public Run findByIdAndUser(int runId, int userId) {
+		
+		return runRepo.findByIdAndUser_Id(runId, userId);
 	}
 
 }
