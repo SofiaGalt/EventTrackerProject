@@ -46,35 +46,36 @@ function displayRuns(runs){
 function displayRun(run){
     
     let div = document.querySelector('#runEntriesTable');
-    let li = document.createElement('li');
     let divListItem = document.createElement('div');
-    if(run.raceTitle) li.innerHTML = li.innerHTML + `race: ${run.raceTitle}  `;
-    if(run.location) li.innerHTML = li.innerHTML + `location: ${run.location}   `
+    divListItem.style.border = "1px solid black";
+    
+    if(run.raceTitle) divListItem.innerHTML = divListItem.innerHTML + `race: ${run.raceTitle}  `;
+    if(run.location) divListItem.innerHTML = divListItem.innerHTML + `location: ${run.location}   `
     if(run.distance) {
-        li.innerHTML = li.innerHTML + `distance: ${run.distance}`;
+        divListItem.innerHTML = divListItem.innerHTML + `distance: ${run.distance}`;
         if(run.distanceUnit) {
-            li.innerHTML = li.innerHTML + `${run.distanceUnit}   `;
+            divListItem.innerHTML = divListItem.innerHTML + `${run.distanceUnit}   `;
         }
     }
-    if(run.hours || run.minutes || run.seconds) li.innerHTML = li.innerHTML + `time: `
+    if(run.hours || run.minutes || run.seconds) divListItem.innerHTML = divListItem.innerHTML + `time: `
     if(run.hours){ 
-        li.innerHTML = li.innerHTML + `${run.hours}:`;
+        divListItem.innerHTML = divListItem.innerHTML + `${run.hours}:`;
     } else {
-        li.innerHTML = li.innerHTML + `00:`;
+        divListItem.innerHTML = divListItem.innerHTML + `00:`;
     }
     if(run.minutes) {
-        li.innerHTML = li.innerHTML + `${run.minutes}:`;
+        divListItem.innerHTML = divListItem.innerHTML + `${run.minutes}:`;
     } else {
-        li.innerHTML = li.innerHTML + `00:`;
+        divListItem.innerHTML = divListItem.innerHTML + `00:`;
     }
     if(run.seconds) {
-        li.innerHTML = li.innerHTML + `${run.seconds}  `;
+        divListItem.innerHTML = divListItem.innerHTML + `${run.seconds}  `;
     } else {
-        li.innerHTML = li.innerHTML + `00  `;
+        divListItem.innerHTML = divListItem.innerHTML + `00  `;
     }
     if(run.notes){
-        li.innerHTML = li.innerHTML + `<br>${run.notes}`
+        divListItem.innerHTML = divListItem.innerHTML + `<br>${run.notes}`
     }
-    li.innerHTML = li.innerHTML + `<br>Posted By ${run.user.username}`;
-    div.appendChild(li);
+    divListItem.innerHTML = divListItem.innerHTML + `<br>Posted By ${run.user.username}`;
+    div.appendChild(divListItem);
 }
