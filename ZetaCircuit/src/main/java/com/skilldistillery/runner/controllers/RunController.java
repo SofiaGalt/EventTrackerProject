@@ -117,6 +117,7 @@ public class RunController {
 			HttpServletRequest req,
 			HttpServletResponse resp
 	) {
+		System.out.println("****************inside addRunForUser ("+ userId + ")  ");
 		run = runService.create(userId, run);
 		if (run != null) {
 			resp.setStatus(201);

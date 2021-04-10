@@ -8,6 +8,7 @@ window.addEventListener('load', function (evt) {
 function init(){
     loadZetaCircuit();
     userPrompt();
+    document.createEntry.submit.addEventListener('click', createEntry);
 }
 
 function userPrompt(){
@@ -159,4 +160,49 @@ function displayRun(run){
 function prepareRunEntriesTable(){
     let div = document.querySelector('#runEntriesTable');
     div.innerHTML = '<h3>Run Entries</h3>';
+}
+
+function createEntry(e){
+    e.preventDefault();
+    console.log("CREATE!");
+
+    if(!user || !user.id){
+        displayErrors("Please Log in to add a run entry.");
+        return;
+    }
+
+    let form = document.createEntry;
+
+    let toPersist = {
+        "distance": form.distance.value,
+        "distanceUnit": form.distanceUnit.value,
+        "hours": form.hours.value,
+        "location": form.location.value,
+        "minutes": form.minutes.value,
+        "notes": form.notes.value,
+        "raceTitle": form.raceTitle.value,
+        "seconds": form.seconds.value
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', `api/users/${user.id}/runs`);
+    console.log(user);
+    xhr.setRequestHeader("Content-type", "application/json");
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 ) {
+            if ( xhr.status == 200 || xhr.status == 201 ) {
+                var run = JSON.parse(xhr.responseText);
+                console.log(run);
+                loadZetaCircuit();
+            }
+            else {
+                console.log("create user bad request");
+                displayErrors(`Something went wrong, we weren't able to save your entry. : ${xhr.status} Error`);
+            }
+        }
+    };
+    var userObjectJson = JSON.stringify(toPersist); 
+    console.log(userObjectJson);
+    xhr.send(userObjectJson);
 }

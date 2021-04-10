@@ -16,6 +16,38 @@
         <div id='currentUser'></div>
         <div id='errors'></div>
         <div id='runEntriesTable'></div>
+        <div>
+            <form name='createEntry'>
+                <h1 id='formHeader'>Enter Run Data</h1>
+                <label for="raceTitle">Race:</label>
+                <input type="text" name='raceTitle'/>
+
+                <label for="location">Location:</label>
+                <input type="text" name='location'>
+
+                <label for="distance">Distance:</label>
+                <input type="number" step='any' name='distance'>
+
+                <label for="distance">Distance Unit:</label>
+                <select name="distanceUnit" id="">
+                    <option value="Miles">Miles</option>
+                </select>
+
+                <label for="hours">Hours: </label>
+                <input type="number" step='1' name='hours'>
+
+                <label for="minutes">Minutes:</label>
+                <input type="number" step='1' name='minutes'>
+
+                <label for="seconds">Seconds:</label>
+                <input type="number" name='seconds'>
+
+                <label for="notes">Notes:</label>
+                <input type="text" name='notes'>
+
+                <button name='submit'>Enter</button>
+            </form>
+        </div>
     </main>
 </body>
 </html>
