@@ -25,11 +25,13 @@ function login(){
     
     let div = document.querySelector('#currentUser');
     div.innerHTML = "";
-
+    div.style.padding = '1.3em';
+    div.style.border = '1px blue dotted';
     let getUserId = document.createElement('form');
     getUserId.name = 'getUserId';
     div.appendChild(getUserId);
     let label = document.createElement('label');
+    label.textContent = "User id:";
     getUserId.appendChild(label);
     let input = document.createElement('input');
     input.name = 'id';
@@ -117,21 +119,44 @@ function loadZetaCircuit(){
         return;
     }
 
-    xhr.open("GET", `api/users/${user.id}/runs`);
+    xhr.open("GET", `api/users/${user.id}/totalMiles`);
     xhr.onreadystatechange = function(){
         if(xhr.readyState === 4){
             if(xhr.status === 200){
                 document.querySelector('#runEntriesTable').innerHTML = ``;
                 console.log(' successful get request! ***');
-                let runs = JSON.parse(xhr.responseText);
-                console.log(runs);
-                displayRuns(runs);
+                let amount = JSON.parse(xhr.responseText);
+                console.log(amount);
+                
+                let sumOfMiles = document.createElement('div');
+                sumOfMiles.innerHTML = `total miles: ${amount} <br>`;
+                let currentUserDiv = document.querySelector("#currentUser");
+                currentUserDiv.insertBefore(sumOfMiles, currentUserDiv.firstChild);
             } else {
-                displayErrors('Error retrieving runs: ' + xhr.status);
+                displayErrors('Error retrieving total miles: ' + xhr.status);
             }
         }
     }
     xhr.send();
+
+
+    let xhr2 = new XMLHttpRequest();
+
+    xhr2.open("GET", `api/users/${user.id}/runs`);
+    xhr2.onreadystatechange = function(){
+        if(xhr2.readyState === 4){
+            if(xhr2.status === 200){
+                document.querySelector('#runEntriesTable').innerHTML = ``;
+                console.log(' successful get request! ***');
+                let runs = JSON.parse(xhr2.responseText);
+                console.log(runs);
+                displayRuns(runs);
+            } else {
+                displayErrors('Error retrieving runs: ' + xhr2.status);
+            }
+        }
+    }
+    xhr2.send();
 }
 
 function displayErrors(msg){
@@ -164,6 +189,8 @@ function displayRun(run){
         divListItem.innerHTML = divListItem.innerHTML + `distance: ${run.distance}`;
         if(run.distanceUnit) {
             divListItem.innerHTML = divListItem.innerHTML + `${run.distanceUnit}   `;
+        } else{
+            divListItem.innerHTML = divListItem.innerHTML + `  `;
         }
     }
     if(run.hours || run.minutes || run.seconds) divListItem.innerHTML = divListItem.innerHTML + `time: `

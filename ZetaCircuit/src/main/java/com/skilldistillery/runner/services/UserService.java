@@ -11,4 +11,5 @@ public interface UserService {
 	User retrieve(int userId);
 	User update(int id, User user);
 	User delete(int userId);
+	Double retrieveTotalMilesForUser(Integer userId);
 }

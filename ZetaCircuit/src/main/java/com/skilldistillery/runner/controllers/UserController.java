@@ -28,4 +28,14 @@ public class UserController {
 		}
 		return u;
 	}
+	
+	@GetMapping("users/{userId}/totalMiles")
+	public Double retrieveTotalMilesRun(@PathVariable Integer userId, HttpServletResponse resp, HttpServletRequest req) {
+		
+		Double t = userService.retrieveTotalMilesForUser(userId);
+		if(t == null) {
+			resp.setStatus(404);
+		}
+		return t;
+	}
 }

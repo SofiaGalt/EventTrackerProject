@@ -2,9 +2,11 @@ package com.skilldistillery.runner.services;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.runner.entities.User;
@@ -16,6 +18,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	EntityManager em;
 
 	@Override
 	public List<User> findAll() {
@@ -59,6 +64,12 @@ public class UserServiceImpl implements UserService {
 		
 		userRepo.saveAndFlush(toDelete);
 		return toDelete;
+	}
+
+	@Override
+	public Double retrieveTotalMilesForUser(Integer userId) {
+		
+		return userRepo.getTotalMilesForUser(em.find(User.class, userId));
 	}
 
 }

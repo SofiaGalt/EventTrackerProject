@@ -11,4 +11,5 @@ public interface RunRepository extends JpaRepository<Run, Integer> {
 	Run findByIdAndEnabled(int id, Boolean enabled);
 	List<Run> findByUser_IdAndEnabled(int id, boolean enabled);
 	Run findByIdAndUser_IdAndEnabled(int runId, int userId, boolean enabled);
+	
 }
