@@ -103,13 +103,13 @@ public class RunServiceImpl implements RunService {
 	@Override
 	public List<Run> findAllForUser(int userId) {
 		
-		return runRepo.findByUser_Id(userId);
+		return runRepo.findByUser_IdAndEnabled(userId, true);
 	}
 
 	@Override
 	public Run findByIdAndUser(int runId, int userId) {
 		
-		return runRepo.findByIdAndUser_Id(runId, userId);
+		return runRepo.findByIdAndUser_IdAndEnabled(runId, userId, true);
 	}
 
 }

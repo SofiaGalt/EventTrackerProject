@@ -58,6 +58,7 @@ function setUser(e){
                 user = JSON.parse(xhr.responseText);
                 console.log(user);
                 displayUser();
+                loadZetaCircuit();
             } else {
                 let div = document.querySelector('#currentUser');
                 let append = document.createElement('p');
@@ -77,21 +78,50 @@ function displayUser(){
 
     div.innerHTML = 'Logged in as ' + user.username + '<br>';
 
-    let logout = document.createElement('input');
-    logout.type = "submit";
-    logout.value= "logout";
-    logout.addEventListener('click', userPrompt);
-    div.appendChild(logout);
+    let logoutBtn = document.createElement('input');
+    logoutBtn.type = "submit";
+    logoutBtn.value = "logout";
+    logoutBtn.addEventListener('click', logout);
+    div.appendChild(logoutBtn);
+}
+
+
+function refreshCreateForm(){
+    let createForm = document.createEntry;
+    document.querySelector('#formHeader').textContent = "Create Run Data";
+    
+    let formFields = createForm.elements;
+    
+    for (var i = 0, field; field = formFields[i++];) {
+        field.value = '';
+    }
+
+    createForm.submit.removeEventListener('click', updateEntry);
+    createForm.submit.removeEventListener('click', createEntry);
+    createForm.submit.addEventListener('click', createEntry);
+}
+
+function logout(){
+    user = {};
+    userPrompt();
+    loadZetaCircuit();
+    refreshCreateForm();
 }
 
 function loadZetaCircuit(){
     console.log('inside loadZetaCircuit');
     let xhr = new XMLHttpRequest();
 
-    xhr.open("GET", "api/runs");
+    if(!user.id) {
+        document.querySelector('#runEntriesTable').innerHTML = `<h2>Log in to view your run entries</h2>`;
+        return;
+    }
+
+    xhr.open("GET", `api/users/${user.id}/runs`);
     xhr.onreadystatechange = function(){
         if(xhr.readyState === 4){
             if(xhr.status === 200){
+                document.querySelector('#runEntriesTable').innerHTML = ``;
                 console.log(' successful get request! ***');
                 let runs = JSON.parse(xhr.responseText);
                 console.log(runs);
@@ -106,9 +136,8 @@ function loadZetaCircuit(){
 
 function displayErrors(msg){
     let div = document.querySelector('#errors');
-    let h1 = document.createElement('h3');
-    h1.textContent = msg;
-    div.appendChild(h1);
+    div.style.color = 'red';
+    div.innerHTML = `<h3>${msg}</h3>`;
 }
 
 function displayRuns(runs){
@@ -169,7 +198,7 @@ function displayRun(run){
     let removeBtn = document.createElement('input');
     removeBtn.type = "submit";
     removeBtn.value = "remove";
-    removeBtn.id = run.id;
+    removeBtn.run = run;
     removeBtn.addEventListener('click', remove);
     divListItem.appendChild(removeBtn);
     
@@ -220,6 +249,8 @@ function updateEntry(e){
     if(user.id != e.target.userId){
         console.log(e.target.userId);
         displayErrors("You cannot change another user's entry.");
+        loadZetaCircuit();
+        refreshCreateForm();
     }
     let toPersist = {
         "distance": form.distance.value,
@@ -259,8 +290,39 @@ function updateEntry(e){
 }
 
 function remove(e){
+    e.preventDefault();
     console.log("remove.");
-    console.log("remove! " + e.target);
+    console.log("remove! " + e.target.run);
+    
+    if(!user || !user.id){
+        displayErrors("Please log in to remove an entry.");
+        return;
+    }
+
+    if(user.id != e.target.run.user.id){
+        console.log(e.target.run.user.id);
+        displayErrors("You cannot remove another user's entry.");
+        loadZetaCircuit();
+        refreshCreateForm();
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('DELETE', `api/users/${user.id}/runs/${e.target.run.id}`);
+    console.log(e.target.run.id);
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 ) {
+            if ( xhr.status == 204) {
+                loadZetaCircuit();
+            }
+            else {
+                console.log("remove run bad request");
+                displayErrors(`Something went wrong, we weren't able to remove your entry. : ${xhr.status} Error`);
+            }
+        }
+    };
+    
+    xhr.send();
 }
 
 function prepareRunEntriesTable(){
@@ -301,6 +363,7 @@ function createEntry(e){
                 var run = JSON.parse(xhr.responseText);
                 console.log(run);
                 loadZetaCircuit();
+                refreshCreateForm();
             }
             else {
                 console.log("create user bad request");

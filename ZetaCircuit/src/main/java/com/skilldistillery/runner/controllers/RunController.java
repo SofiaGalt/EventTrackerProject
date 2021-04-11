@@ -133,7 +133,7 @@ public class RunController {
 	}
 	
 	@DeleteMapping("users/{userId}/runs/{runId}")
-	public void deleteCommentFromPost(@PathVariable Integer userId, @PathVariable Integer runId, HttpServletResponse resp) {
+	public void deleteRunForUser(@PathVariable Integer userId, @PathVariable Integer runId, HttpServletResponse resp) {
 		
 		if (runService.delete(userId, runId) != null) {
 			resp.setStatus(204);
