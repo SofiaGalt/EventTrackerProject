@@ -2,16 +2,15 @@ package com.skilldistillery.runner.entities;
 
 import java.util.List;
 
-import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class User {
@@ -33,6 +32,9 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private List<Run> runs;
+	
+	@Transient 
+	private static int nextPass = 1;
 
 	public int getId() {
 		return id;
@@ -56,7 +58,7 @@ public class User {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = "" + nextPass++;
 	}
 
 	public String getFirstName() {

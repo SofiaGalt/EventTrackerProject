@@ -102,7 +102,7 @@ public class Run {
 	}
 
 	public void setDistanceUnit(String distanceUnit) {
-		this.distanceUnit = distanceUnit;
+ 		this.distanceUnit = distanceUnit;
 	}
 
 	public String getNotes() {

@@ -19,6 +19,91 @@ function userPrompt(){
     submitButton.value= "Login";
     submitButton.addEventListener('click', login);
     div.appendChild(submitButton);
+
+    var createAccountButton = document.createElement('input');
+    createAccountButton.type = "submit";
+    createAccountButton.value= "Create Account";
+    createAccountButton.addEventListener('click', createAccount);
+    div.appendChild(createAccountButton);
+}
+
+function createAccount(){
+    console.log(`Create Account!`);
+
+    let div = document.querySelector('#currentUser');
+    div.innerHTML = "";
+    div.style.padding = '1.3em';
+    div.style.border = '1px blue dotted';
+
+    let createAccount = document.createElement('form');
+    createAccount.name = 'createAccount';
+    div.appendChild(createAccount);
+
+    let usernameLabel = document.createElement('label');
+    usernameLabel.textContent = "Username: ";
+    createAccount.appendChild(usernameLabel);
+
+    let unInput = document.createElement('input');
+    unInput.name = 'username';
+    createAccount.appendChild(unInput);
+
+    // let passwordLabel = document.createElement('label');
+    // passwordLabel.textContent = "Password: ";
+    // createAccount.appendChild(passwordLabel);
+
+    // let passInput = document.createElement('input');
+    // passInput.name = 'password';
+    // createAccount.appendChild(passInput);
+    
+    let submitButton = document.createElement('input');
+    submitButton.type = "submit";
+    submitButton.value= "Submit";
+    submitButton.addEventListener('click', createUser);
+    createAccount.appendChild(submitButton);
+}
+
+function createUser(e){
+
+    e.preventDefault();
+    console.log("CREATE USER!");
+
+    let form;
+
+    if(document.createAccount) {
+        form = document.createAccount;
+    } else {
+        console.log('createAccount form does not exist');
+        return;
+    }
+
+    let toPersist = {
+        "username" : form.username.value,
+        // "password" : form.password.value
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', `api/users/`);
+    
+    xhr.setRequestHeader("Content-type", "application/json");
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 ) {
+            if ( xhr.status == 200 || xhr.status == 201 ) {
+                user = JSON.parse(xhr.responseText);
+                console.log(user);
+                displayUser();
+                loadZetaCircuit();
+                refreshCreateForm();
+            }
+            else {
+                console.log("create user bad request");
+                displayErrors(`Something went wrong, we weren't able to save your entry. : ${xhr.status} Error`);
+            }
+        }
+    };
+    var userObjectJson = JSON.stringify(toPersist); 
+    console.log(userObjectJson);
+    xhr.send(userObjectJson);
 }
 
 function login(){
@@ -119,6 +204,8 @@ function loadZetaCircuit(){
         return;
     }
 
+    document.querySelector('#errors').textContent = "";
+
     xhr.open("GET", `api/users/${user.id}/totalMiles`);
     xhr.onreadystatechange = function(){
         if(xhr.readyState === 4){
@@ -133,7 +220,10 @@ function loadZetaCircuit(){
                 let currentUserDiv = document.querySelector("#currentUser");
                 currentUserDiv.insertBefore(sumOfMiles, currentUserDiv.firstChild);
             } else {
-                displayErrors('Error retrieving total miles: ' + xhr.status);
+                let sumOfMiles = document.createElement('div');
+                sumOfMiles.innerHTML = `total miles: 0 <br>`;
+                let currentUserDiv = document.querySelector("#currentUser");
+                currentUserDiv.insertBefore(sumOfMiles, currentUserDiv.firstChild);
             }
         }
     }
