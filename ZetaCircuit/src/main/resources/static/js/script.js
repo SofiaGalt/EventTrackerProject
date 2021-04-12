@@ -27,6 +27,36 @@ function userPrompt(){
     div.appendChild(createAccountButton);
 }
 
+function displayUser(){
+    
+    let div = document.querySelector('#currentUser');
+    div.innerHTML = "";
+
+    console.log("inside displayUser()");
+
+    div.innerHTML = 'Logged in as ' + user.username + '<br>';
+
+    let logoutBtn = document.createElement('input');
+    logoutBtn.type = "submit";
+    logoutBtn.value = "logout";
+    logoutBtn.addEventListener('click', logout);
+    div.appendChild(logoutBtn);
+
+    let updateBtn = document.createElement('input');
+    updateBtn.type = "submit";
+    updateBtn.value = "update";
+    updateBtn.user = user;
+    updateBtn.addEventListener('click', updateUser);
+    div.appendChild(updateBtn);
+
+    let removeBtn = document.createElement('input');
+    removeBtn.type = "submit";
+    removeBtn.value = "remove";
+    removeBtn.user = user;
+    removeBtn.addEventListener('click', removeUser);
+    div.appendChild(removeBtn);
+}
+
 function createAccount(){
     console.log(`Create Account!`);
 
@@ -157,19 +187,120 @@ function setUser(e){
     xhr.send();
 }
 
-function displayUser(){
+function updateUserRequest(e){
+    console.log("xhr request -----------------------------");
+
+    let toUpdate = user;
+    console.log("toupdate :" + toUpdate.username);
+
+    let form = document.updateAccount;
+    
+    let toPersist = {
+         "username" : form.username.value
+        // "password" : form.password.value
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('PUT', `api/users/${user.id}`);
+    
+    xhr.setRequestHeader("Content-type", "application/json");
+
+    // xhr.onreadystatechange = function() {
+    //     console.log("On ready state change()! " + user);
+    //     if (xhr.readyState === 4 ) {
+    //         console.log("xhr.readyStatus ===4 ! " + user);
+    //         if ( xhr.status == 200 || xhr.status == 201 ) {
+    //             user = JSON.parse(xhr.responseText);
+    //             console.log("Success update! " + user);
+    //             displayUser();
+    //             loadZetaCircuit();
+    //             refreshCreateForm();
+    //         }
+    //         else {
+    //             console.log("Fail update!" + user);
+    //             console.log("update user bad request");
+    //             displayErrors(`Something went wrong, we weren't able to update your entry. : ${xhr.status} Error`);
+    //         }
+    //     }
+    // };
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 ) {
+            if ( xhr.status == 200 || xhr.status == 201 ) {
+                var run = JSON.parse(xhr.responseText);
+                console.log("loaded: " + run);
+                loadZetaCircuit();
+
+                // updateForm.submit.removeEventListener('click', updateEntry);
+                // updateForm.submit.addEventListener('click', createEntry);
+            }
+            else {
+                console.log("update user bad request");
+                displayErrors(`Something went wrong, we weren't able to update your entry. : ${xhr.status} Error`);
+            }
+        }
+    };
+
+    var userObjectJson = JSON.stringify(toPersist); 
+    console.log("JSON : " + userObjectJson);
+    xhr.send(userObjectJson);
+        
+}
+
+function removeUser(e){
+
+    e.preventDefault();
+    console.log("remove.");
+    console.log("remove! " + e.target.run);
+    
+    if(!user || !user.id){
+        displayErrors("Please log in delete your account.");
+        return;
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('DELETE', `api/users/${user.id}`);
+    console.log(`Path : DELETE api/users/${user.id}`);
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 ) {
+            if ( xhr.status == 204) {
+                user = {};
+                userPrompt();
+                loadZetaCircuit();
+            }
+            else {
+                console.log("remove run bad request");
+                displayErrors(`Something went wrong, we weren't able to remove your account. : ${xhr.status} Error`);
+            }
+        }
+    };
+    
+    xhr.send();
+}
+
+function updateUser(e){
+    
     let div = document.querySelector('#currentUser');
     div.innerHTML = "";
+    let updateForm = document.createElement('form');
+    updateForm.name = 'updateAccount';
+    div.appendChild(updateForm);
 
-    console.log("inside displayUser()");
+    let usernameLabel = document.createElement('label');
+    usernameLabel.textContent = "Username: ";
+    updateForm.appendChild(usernameLabel);
 
-    div.innerHTML = 'Logged in as ' + user.username + '<br>';
+    let unInput = document.createElement('input');
+    unInput.name = 'username';
+    updateForm.appendChild(unInput);
+    
+    let submitButton = document.createElement('input');
+    submitButton.type = "submit";
+    submitButton.value= "Enter";
+    submitButton.addEventListener('click', updateUserRequest);
+    updateForm.appendChild(submitButton);
 
-    let logoutBtn = document.createElement('input');
-    logoutBtn.type = "submit";
-    logoutBtn.value = "logout";
-    logoutBtn.addEventListener('click', logout);
-    div.appendChild(logoutBtn);
+    div.appendChild(updateForm);
 }
 
 
