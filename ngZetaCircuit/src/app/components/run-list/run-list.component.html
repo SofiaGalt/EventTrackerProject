@@ -54,7 +54,7 @@
     <p>Location : {{selected.location}}    <span id="time">Time: <span id="clock">{{selected.hours}}:{{selected.minutes}}:{{selected.seconds}}</span> </span> <span id="time">Distance: <span id="clock">{{selected.distance}}{{selected.distanceUnit}}</span></span></p>
     <p>{{selected.notes}}</p>
     <span><button (click)="editRun = selected;">Edit</button>
-    <button >Done</button> </span>
+    <button (click)="selected = null;">Done</button> </span>
   </div>
   <br><hr><br>
 </div>
@@ -70,8 +70,14 @@
 </div>
 
 <!-- List Runs -->
+<div>
+  <hr>
+  <h4>{{getNumberOfRecords()}} records to display</h4>
+  <hr>
+</div>
 <div class="card myCard" *ngFor="let run of runs" (click)="selected = run">
   <h5>{{run.id}} : {{run.raceTitle}}</h5>
+  <button class="btn btn-outline-dark" id="deleteRunBtn" (click)="deleteRun(run.id)">X</button>
   <p>Location : {{run.location}}    <span id="time">Time: <span id="clock">{{run.hours}}:{{run.minutes}}:{{run.seconds}}</span> </span> <span id="time">Distance: <span id="clock">{{run.distance}}{{run.distanceUnit}}</span></span></p>
   <p>{{run.notes}}</p>
 </div>

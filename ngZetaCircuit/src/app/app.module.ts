@@ -8,6 +8,7 @@ import { RunService } from './services/run.service';
 import { UserService } from './services/user.service';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { RunListComponent } from './components/run-list/run-list.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { RunListComponent } from './components/run-list/run-list.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     UserService,

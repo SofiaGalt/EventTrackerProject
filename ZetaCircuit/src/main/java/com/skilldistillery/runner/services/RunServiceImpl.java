@@ -33,7 +33,12 @@ public class RunServiceImpl implements RunService {
 	public Run create(Run run) {
 		
 		User user = run.getUser();
-		run.setUser(em.find(User.class, user.getId()));
+		if(user != null) {
+			run.setUser(em.find(User.class, user.getId()));
+		}
+		else{
+			run.setUser(em.find(User.class, 1));
+		}
 		
 		return runRepo.saveAndFlush(run);
 	}
