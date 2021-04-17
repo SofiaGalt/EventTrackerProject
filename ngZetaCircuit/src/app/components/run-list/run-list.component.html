@@ -56,17 +56,54 @@
     <span><button (click)="editRun = selected;">Edit</button>
     <button (click)="selected = null;">Done</button> </span>
   </div>
-  <br><hr><br>
+  <br>
 </div>
 
 <!-- Edit -->
 <div *ngIf="editRun" >
-  <label for="raceTitle">Race Title: </label>
-  <input type="text" name="raceTitle" value="{{editRun.raceTitle}}" [(ngModel)]='editRun.raceTitle'>
-  <label for="location">Location: </label>
-  <input type="text" name="location" value="{{editRun.location}}" [(ngModel)]='editRun.location'>
+  <hr>  <h4>Update Run Data</h4>
+  <form class='form'>
+    <div class="input-group">
 
-  <button (click)='cancelEdit()'>Cancel</button><button (click)='updateTodo(editRun)'>Save</button>
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="">Race Title</span>
+      </div>
+      <input class="form-control" type="text" name="raceTitle" [(ngModel)]="editRun.raceTitle">
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="">Location</span>
+      </div>
+      <input class="form-control" type="text" name="location" [(ngModel)]="editRun.location">
+    </div>
+    <form class="form form-inline">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="">Time</span>
+        </div>
+        <input class="form-control" type="number" name="hours" placeholder="HH" [(ngModel)]="editRun.hours">
+        <input class="form-control" type="number" name="minutes" placeholder="MM" [(ngModel)]="editRun.minutes">
+        <input class="form-control" type="number" name="seconds" placeholder="SS" [(ngModel)]="editRun.seconds">
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="">Distance</span>
+        </div>
+        <input class="form-control" type="number" name="distance" [(ngModel)]="editRun.distance">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Miles</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Miles</a>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <label for="notes">Notes </label>
+    <input class="form-control" type="text" name="notes" value="editRun.notes" [(ngModel)]="editRun.notes">
+
+    <button (click)='editRun = null'>Cancel</button><button (click)='updateRun(editRun)'>Update Run</button>
+  </form>
 </div>
 
 <!-- List Runs -->

@@ -55,7 +55,7 @@ export class RunListComponent implements OnInit {
       });
   }
 
-  updateTodo = (run: Run, displayRun = true) => {
+  updateRun = (run: Run, displayRun = true) => {
 
     this.runService.update(run).subscribe(
       data => {
