@@ -15,12 +15,20 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+apply plugin: 'war'
+war {
+  enabled = true
+  archiveName = "${baseName}.war"     // Our app name, as defined in settings.gradle
+  destinationDir = file("../WAR")      // WAR/ folder under project root directory
+}
+
 repositories {
 	mavenCentral()
 }
 
 dependencies {
 
+	providedRuntime ('org.springframework.boot:spring-boot-starter-tomcat')
 	implementation ('org.springframework.boot:spring-boot-starter-tomcat')
 	implementation project(':JPARunner')
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

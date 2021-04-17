@@ -59,9 +59,9 @@ CREATE TABLE IF NOT EXISTS `run` (
 ENGINE = InnoDB;
 
 SET SQL_MODE = '';
--- DROP USER IF EXISTS runuser@localhost;
+DROP USER IF EXISTS runuser@localhost;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
--- CREATE USER 'runuser'@'localhost' IDENTIFIED BY 'runuser';
+CREATE USER 'runuser'@'localhost' IDENTIFIED BY 'runuser';
 
 GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'runuser'@'localhost';
 
@@ -92,3 +92,4 @@ INSERT INTO `run` (`id`, `race_title`, `hours`, `minutes`, `seconds`, `location`
 INSERT INTO `run` (`id`, `race_title`, `hours`, `minutes`, `seconds`, `location`, `distance`, `distance_unit`, `notes`, `user_id`, `enabled`) VALUES (4, NULL, 1, 5, 22, 'Metro Area', 3, 'miles', NULL, 3, 1);
 
 COMMIT;
+
