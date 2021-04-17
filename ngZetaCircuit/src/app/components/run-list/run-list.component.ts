@@ -15,6 +15,7 @@ export class RunListComponent implements OnInit {
   newRun: Run = new Run();
   editRun: Run = null;
   showComplete = false;
+  totalMiles: number = 0;
 
   constructor(private runService: RunService) { }
 
@@ -26,9 +27,23 @@ export class RunListComponent implements OnInit {
   getNumberOfRecords = () => {
 
     return this.runs.length;
+
+  }
+
+  getTotalMiles = () => {
+    this.runService.getTotalMiles().subscribe(
+      data => {
+        this.totalMiles = data;
+      },
+      fail => {
+        console.log(fail);
+      }
+    );
   }
 
   loadRuns(): void {
+
+    this.getTotalMiles();
 
     this.runService.index().subscribe(
       data => {

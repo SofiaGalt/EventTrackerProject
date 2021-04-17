@@ -40,9 +40,6 @@ export class RunService {
 
   create(run: Run): Observable<Run> {
 
-    console.log("create Run service ");
-    // set  default values first
-
     return this.http.post<Run>(this.url, run).pipe(
       catchError((err: any) => {
         console.log(err);
@@ -68,6 +65,16 @@ export class RunService {
       catchError((err: any) => {
         console.log(err);
         return throwError('KaBOOM');
+      })
+    );
+  }
+
+  getTotalMiles(){
+    return this.http.get<number>(this.url + "/totalMiles")
+    .pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('KABOOM');
       })
     );
   }

@@ -117,4 +117,10 @@ public class RunServiceImpl implements RunService {
 		return runRepo.findByIdAndUser_IdAndEnabled(runId, userId, true);
 	}
 
+	@Override
+	public Double getTotalMilesForAllRuns() {
+		
+		return runRepo.getTotalMilesForAllRuns();
+	}
+
 }

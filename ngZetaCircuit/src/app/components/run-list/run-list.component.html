@@ -109,7 +109,7 @@
 <!-- List Runs -->
 <div>
   <hr>
-  <h4>{{getNumberOfRecords()}} records to display</h4>
+  <h4>{{getNumberOfRecords()}} records to display <span id="time">Total miles: {{totalMiles}}</span></h4>
   <hr>
 </div>
 <div class="card myCard" *ngFor="let run of runs" (click)="selected = run">

@@ -37,6 +37,11 @@ public class RunController {
 		return runService.findAll();
 	}
 	
+	@GetMapping("runs/totalMiles")
+	public Double allRunsTotalMiles() {
+		return runService.getTotalMilesForAllRuns();
+	} 
+	
 	@GetMapping("runs/{id}")
 	public Run findById(@PathVariable Integer id) {
 		return runService.retrieve(id);

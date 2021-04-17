@@ -16,6 +16,7 @@ public interface RunService {
 	Run delete(int userId, int runId);
 	List<Run> findAllForUser(int userId);
 	Run findByIdAndUser(int runId, int userId);
+	Double getTotalMilesForAllRuns();
 //	List<Run> retrieveAllRunsForUser Average Pace(int userId);
 //	List<Run> retrieveAllRunsForUser Average Distance(int userId);
 //	List<Run> retrieveAllRunsForUser total miles run(int userId);
